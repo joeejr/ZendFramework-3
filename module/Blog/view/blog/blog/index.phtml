@@ -4,11 +4,14 @@
     <tr>
         <th>Title</th>
         <th>Content</th>
+        <th>Action</th>
     </tr>
     <?php foreach($posts AS $post): ?>
         <tr>
             <td><?= $post->title ?></td>
             <td><?= $post->content ?></td>
+            <td><a href="<?= $this->url('post', ['action' => 'edit', 'id' => $post->id]) ?>">Edit</a></td>
+            <td><a href="<?= $this->url('post', ['action' => 'delete', 'id' => $post->id]) ?>">Delete</a></td>
         </tr>
     <?php endforeach; ?>
 </table>
