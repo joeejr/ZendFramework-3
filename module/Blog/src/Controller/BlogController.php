@@ -4,17 +4,20 @@ namespace Blog\Controller;
 
 use Blog\Model\Post;
 use Blog\Form\PostForm;
+use Blog\InputFilter\PostInputFilter;
 use Blog\Model\PostTable;
 use Zend\View\Model\ViewModel;
 use Zend\Mvc\Controller\AbstractActionController;
 
 class BlogController extends AbstractActionController
 {
-    private $table;
-    private $form;
+    private PostTable $table;
+    private PostForm $form;
 
     /**
      * Class constructor.
+     * @param PostTable $table
+     * @param PostForm $form
      */
     public function __construct(PostTable $table, PostForm $form)
     {
@@ -36,6 +39,7 @@ class BlogController extends AbstractActionController
         $form->get('submit')->setValue('Create Post');
 
         $request = $this->getRequest();
+
         if (!$request->isPost()) {
             return [
                 'form' => $form
@@ -43,7 +47,6 @@ class BlogController extends AbstractActionController
         }
 
         $form->setData($request->getPost());
-
         if(!$form->isValid()){
             return [
                 'form' => $form
@@ -52,7 +55,6 @@ class BlogController extends AbstractActionController
 
         $post = new Post();
         $post->exchangeArray($form->getData());
-
         $this->table->save($post);
 
         return $this->redirect()->toRoute('post');
