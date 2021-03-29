@@ -3,6 +3,7 @@ namespace Blog\Form\Factory;
 
 use Blog\Form\PostForm;
 use Blog\InputFilter\PostInputFilter;
+use Interop\Container\ContainerInterface;
 
 class PostFormFactory
 {

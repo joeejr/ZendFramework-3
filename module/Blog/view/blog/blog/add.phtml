@@ -1,11 +1,19 @@
 <h1>Add New Post</h1>
 
 <?php
+    $message = $this->formElementErrors($title, ['class' => 'help-block']);
+    $invalid = ($message) ? ' is-invalid' : '';
+
     $title = $form->get('title');
-    $title->setAttribute('class', 'form-control');
+    $title->setAttribute('class', "form-control".$invalid)
+          ->setLabelAttributes(['class' => 'control-label']);
+
+    $message = $this->formElementErrors($content, ['class' => 'help-block']);
+    $invalid = ($message) ? ' is-invalid' : '';
 
     $content = $form->get('content');
-    $content->setAttribute('class', 'form-control');
+    $content->setAttribute('class', 'form-control'.$invalid)
+            ->setLabelAttributes(['class' => 'control-label']);
 
     $submit = $form->get('submit');
     $submit->setAttribute('class', 'btn btn-primary');
@@ -20,11 +28,13 @@
 <div class="form-group">
     <?= $this->formLabel($title); ?>
     <?= $this->formElement($title); ?>
+    <?= $this->formElementErrors($title); ?>
 </div>
 
 <div class="form-group">
     <?= $this->formLabel($content); ?>
     <?= $this->formElement($content); ?>
+    <?= $this->formElementErrors($content); ?>
 </div>
 
 <?= $this->formSubmit($submit); ?>
