@@ -11,13 +11,15 @@ use Zend\Mvc\Controller\AbstractActionController;
 class BlogController extends AbstractActionController
 {
     private $table;
+    private $form;
 
     /**
      * Class constructor.
      */
-    public function __construct(PostTable $table)
+    public function __construct(PostTable $table, PostForm $form)
     {
         $this->table = $table;
+        $this->form = $form;
     }
 
     public function indexAction()
@@ -30,7 +32,7 @@ class BlogController extends AbstractActionController
 
     public function addAction()
     {
-        $form = new PostForm();
+        $form = $this->form;
         $form->get('submit')->setValue('Create Post');
 
         $request = $this->getRequest();
@@ -69,7 +71,7 @@ class BlogController extends AbstractActionController
             return $this->redirect()->toRoute('post');
         }
 
-        $form = new PostForm();
+        $form = new $this->form;
         $form->bind($post);
         $form->get('submit')->setAttribute('value', 'Edit Post');
 
